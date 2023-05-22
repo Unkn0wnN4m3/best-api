@@ -38,8 +38,12 @@ async function updateOneWorkout(workoutId, body) {
   return updateWorkout;
 }
 
-function deleteOneWorkout() {
-  return;
+async function deleteOneWorkout(workoutId) {
+  await Workout.destroy({
+    where: {
+      id: workoutId,
+    },
+  });
 }
 
 export {

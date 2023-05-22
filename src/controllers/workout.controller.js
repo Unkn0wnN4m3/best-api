@@ -54,9 +54,15 @@ async function updateOneWorkout(req, res) {
   res.json({ status: "OK", data: updateWorkout });
 }
 
-function deleteOneWorkout(_, res) {
-  workoutService.deleteOneWorkout();
-  res.send("Delete an existing workout");
+async function deleteOneWorkout(req, res) {
+  const { workoutId } = req.params;
+
+  if (!workoutId) {
+    return;
+  }
+
+  await workoutService.deleteOneWorkout(workoutId);
+  res.status(204).json({ status: "OK" });
 }
 
 export {
