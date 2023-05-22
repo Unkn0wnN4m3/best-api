@@ -4,8 +4,11 @@ import { Workout } from "../database/models/workout.js";
 // methods so that you have a connection between those.
 
 async function getAllWorkouts() {
-  const allProjects = await Workout.findAll();
-  return allProjects;
+  const allWorkouts = await Workout.findAll();
+  if (allWorkouts.length === 0) {
+    throw new Error("No workouts added");
+  }
+  return allWorkouts;
 }
 
 async function getOneWorkout(workout) {
@@ -14,6 +17,7 @@ async function getOneWorkout(workout) {
       id: workout,
     },
   });
+  if (!oneWorkout) throw new Error("Workout doesn't exists");
   return oneWorkout;
 }
 
@@ -30,20 +34,17 @@ async function createNewWorkout(workout) {
 }
 
 async function updateOneWorkout(workoutId, body) {
-  const updateWorkout = await Workout.update(body, {
-    where: {
-      id: workoutId,
-    },
-  });
-  return updateWorkout;
+  const updatedWorkout = await Workout.findByPk(workoutId);
+  if (!updatedWorkout) throw new Error("Workout doesn't exists");
+  updatedWorkout.set(body);
+  await updatedWorkout.save();
+  return updatedWorkout;
 }
 
 async function deleteOneWorkout(workoutId) {
-  await Workout.destroy({
-    where: {
-      id: workoutId,
-    },
-  });
+  const deletedWorkout = await Workout.findByPk(workoutId);
+  if (!deletedWorkout) throw new Error("Workout doesn't exists");
+  await deletedWorkout.destroy();
 }
 
 export {
