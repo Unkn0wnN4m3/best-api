@@ -8,8 +8,13 @@ async function getAllWorkouts() {
   return allProjects;
 }
 
-function getOneWorkout() {
-  return;
+async function getOneWorkout(workout) {
+  const oneWorkout = await Workout.findOne({
+    where: {
+      id: workout,
+    },
+  });
+  return oneWorkout;
 }
 
 async function createNewWorkout(workout) {
@@ -24,8 +29,13 @@ async function createNewWorkout(workout) {
   return newWorkout;
 }
 
-function updateOneWorkout() {
-  return;
+async function updateOneWorkout(workoutId, body) {
+  const updateWorkout = await Workout.update(body, {
+    where: {
+      id: workoutId,
+    },
+  });
+  return updateWorkout;
 }
 
 function deleteOneWorkout() {

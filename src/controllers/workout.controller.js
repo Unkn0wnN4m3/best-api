@@ -5,9 +5,15 @@ async function getAllWorkouts(_, res) {
   res.json({ status: "OK", data: allworkouts });
 }
 
-function getOneWorkout(_, res) {
-  const workout = workoutService.getOneWorkout();
-  res.send("Get an existing workout");
+async function getOneWorkout(req, res) {
+  const { workoutId } = req.params;
+
+  if (!workoutId) {
+    return;
+  }
+
+  const workout = await workoutService.getOneWorkout(workoutId);
+  res.json({ status: "OK", data: workout });
 }
 
 async function createNewWorkout(req, res) {
@@ -34,9 +40,18 @@ async function createNewWorkout(req, res) {
   res.status(201).json({ status: "OK", data: createWorkout });
 }
 
-function updateOneWorkout(_, res) {
-  const updateWorkout = workoutService.updateOneWorkout();
-  res.send("Update an existing workout");
+async function updateOneWorkout(req, res) {
+  const {
+    body,
+    params: { workoutId },
+  } = req;
+
+  if (!workoutId) {
+    return;
+  }
+
+  const updateWorkout = await workoutService.updateOneWorkout(workoutId, body);
+  res.json({ status: "OK", data: updateWorkout });
 }
 
 function deleteOneWorkout(_, res) {
