@@ -15,12 +15,12 @@ export const Workout = sequalize.define("workouts", {
     type: DataTypes.TEXT,
   },
   equipment: {
-    type: DataTypes.ARRAY(DataTypes.TEXT),
+    type: DataTypes.JSON,
   },
   exercises: {
-    type: DataTypes.ARRAY(DataTypes.TEXT),
+    type: DataTypes.JSON,
   },
   trainerTips: {
-    type: DataTypes.ARRAY(DataTypes.TEXT),
+    type: DataTypes.JSON,
   },
 });
