@@ -50,6 +50,7 @@ async function createNewWorkout(req, res) {
           "One of the following keys is missing or is empty in request body: 'name', 'mode', 'equipment', 'exercises', 'trainerTips'",
       },
     });
+    return;
   }
 
   const newWorkout = {
@@ -108,7 +109,7 @@ async function deleteOneWorkout(req, res) {
 
   try {
     await workoutService.deleteOneWorkout(workoutId);
-    res.status(204).json({ status: "OK" });
+    res.sendStatus(204);
   } catch (error) {
     res
       .status(error?.status || 500)
